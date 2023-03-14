@@ -14,21 +14,34 @@ class Hiro extends Component {
   }
 }
 
-function Square() {
-  return (
-    <button>
-      Drew Test
-    </button>
-  );
-}
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-let App = function Game() {
-  return (
-    <div>
-      <Hiro />
-      <Square />
-    </div>
-  );
+    this.state = {startVr : false};
+
+    this.handleStartClick = this.handleStartClick.bind(this);
+  }
+
+  handleStartClick() {
+    this.setState({startVr : true });
+  }
+
+  render() {
+    return (
+      <div>
+        {!this.state.startVr && (
+          <button onClick={this.handleStartClick}>
+              Click here!
+          </button>
+        )}
+
+        {this.state.startVr && (
+          <Hiro />
+        )}
+      </div>
+    )
+  }
 }
 
 const root = createRoot(document.getElementById('root'));
