@@ -86,15 +86,18 @@ class App {
     let loader = new THREE.TextureLoader();
 
     var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
-      map: loader.load('test.jpg')
+      //map: loader.load('test.jpg')
+      map: loader.load('https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg')
     });
 
-    const geometry = new THREE.BoxBufferGeometry( 500, 500, 500 );
+    const geometry = new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 );
     //const geometry = new THREE.PlaneGeometry(1000, 1000);
 
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(this.reticle.position);
     scene.add(mesh);
+
+    this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
 
     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
     shadowMesh.position.y = clone.position.y;
