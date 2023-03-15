@@ -13,13 +13,20 @@
  * limitations under the License.
  */
 
-/*window.gltfLoader = new THREE.GLTFLoader();
+
+
+
+window.gltfLoader = new THREE.GLTFLoader();
 
 window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
   const flower = gltf.scene.children.find(c => c.name === 'sunflower')
   flower.castShadow = true;
   window.sunflower = gltf.scene;
-});*/
+});
+
+
+
+
 
 /**
  * The Reticle class creates an object that repeatedly calls
