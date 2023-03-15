@@ -89,6 +89,10 @@ class App {
       map: loader.load('test.jpg')
     });
 
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), material);
+    plane.position.copy(this.reticle.position);
+    scene.add(plane);
+
 
     /*var img = new THREE.MeshBasicMaterial({
       map:THREE.ImageUtils.loadTexture('test.jpg')
