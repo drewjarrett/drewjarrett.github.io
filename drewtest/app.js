@@ -87,7 +87,7 @@ class App {
 
 
 
-    this.reticle.visible = false;
+    //this.reticle.visible = false;
 
 
     if (window.sunflower) {
@@ -100,21 +100,20 @@ class App {
     }
 
 
-    const materials = [
-      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
-      new THREE.MeshBasicMaterial({ color: 0x0000ff }),
-      new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
-      new THREE.MeshBasicMaterial({ color: 0xff00ff }),
-      new THREE.MeshBasicMaterial({ color: 0x00ffff }),
-      new THREE.MeshBasicMaterial({ color: 0xffff00 })
-    ];
 
-    const box = new THREE.Mesh(new THREE.BoxBufferGeometry(0.2, 0.2, 0.2), materials);
-    box.position.copy(this.reticle.position);
-    box.position.multiplyScalar(1);
-    scene.add(box);
+    if (window.testbox) {
+      const testclone = window.testbox.clone();
+      testclone.position.copy(this.reticle.position);
+      this.scene.add(testclone)
 
-    /*let loader = new THREE.TextureLoader();
+      //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
+      //shadowMesh.position.y = clone.position.y;
+    }
+
+
+    /* No idea where this goes wrong */
+
+    let loader = new THREE.TextureLoader();
 
     var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
       //map: loader.load('test.jpg')
@@ -126,12 +125,12 @@ class App {
 
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(this.reticle.position);
-    scene.add(mesh);
+    this.scene.add(mesh);
 
-    this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
+    //this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
 
-    const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-    shadowMesh.position.y = clone.position.y;*/
+    //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
+    //shadowMesh.position.y = clone.position.y;
   }
 
   /**
