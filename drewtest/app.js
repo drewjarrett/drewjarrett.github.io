@@ -83,15 +83,19 @@ class App {
 
   /** Place a sunflower when the screen is tapped. */
   onSelect = () => {
-    alert("DREW");
-    /*if (window.sunflower) {
-      const clone = window.sunflower.clone();
-      clone.position.copy(this.reticle.position);
-      this.scene.add(clone)
+    var img = new THREE.MeshBasicMaterial({
+      map:THREE.ImageUtils.loadTexture('test.jpg')
+    });
+    img.map.needsUpdate = true;
 
-      const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-      shadowMesh.position.y = clone.position.y;
-    }*/
+    // plane
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), img);
+    plane.overdraw = true;
+    plane.position.copy(this.reticle.position);
+    scene.add(plane);
+
+    const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
+    shadowMesh.position.y = clone.position.y;
   }
 
   /**
