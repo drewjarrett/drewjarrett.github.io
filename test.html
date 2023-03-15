@@ -19,8 +19,6 @@
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
         
         <a-camera gps-camera rotation-reader></a-camera>
-
-        <a-entity gltf-model="./assets/magnemite/scene.gltf" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="longitude: -1.3118506; latitude: 51.0698645;" animation-mixer/>
   </a-scene>
 
 <script>
@@ -33,11 +31,14 @@
       model.setAttribute('gltf-model', './assets/magnemite/scene.gltf');
       model.setAttribute('rotation', '0 180 0');
       model.setAttribute('animation-mixer', '');
-      model.setAttribute('scale', '0.5 0.5 0.5');
+      model.setAttribute('scale', '0.3 0.3 0.3');
+      model.setAttribute('position', '0 0 0');
 
-      model.addEventListener('loaded', () => {
+      /*model.addEventListener('loaded', () => {
         alert('Well... it loaded apparently. latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
-      });
+      });*/
+
+      let imagemodel = document.createElement('a-entity');
 
       scene.appendChild(model);
     });
