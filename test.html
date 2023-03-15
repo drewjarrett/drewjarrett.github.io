@@ -19,6 +19,10 @@
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
         
         <a-camera gps-camera rotation-reader></a-camera>
+
+        <a-assets>
+          <img id="test-image" crossorigin="anonymous" src="./test.jpg">
+        </a-assets>
   </a-scene>
 
 <script>
@@ -28,7 +32,12 @@
     navigator.geolocation.getCurrentPosition((position) => {
       let model = document.createElement('a-entity');
       model.setAttribute('gps-entity-place', 'latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
-      model.setAttribute('gltf-model', './assets/magnemite/scene.gltf');
+      //model.setAttribute('gltf-model', './assets/magnemite/scene.gltf');
+      
+      model.setAttribute('template', 'src: #link');
+      model.setAttribute('data-src', 'src: #test-image');
+      model.setAttribute('data-thumb', 'src: #test-image');
+
       model.setAttribute('rotation', '0 180 0');
       model.setAttribute('animation-mixer', '');
       model.setAttribute('scale', '0.3 0.3 0.3');
