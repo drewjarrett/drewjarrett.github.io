@@ -81,7 +81,7 @@ class App {
     this.xrSession.addEventListener("select", this.onSelect);
   }
 
-  /** Place a sunflower when the screen is tapped. */
+  /** Place image when the screen is tapped. */
   onSelect = () => {
     let loader = new THREE.TextureLoader();
 
