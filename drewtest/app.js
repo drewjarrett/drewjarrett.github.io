@@ -83,7 +83,7 @@ class App {
 
   /** Place a sunflower when the screen is tapped. */
   onSelect = () => {
-    var img = new THREE.MeshBasicMaterial({
+    /*var img = new THREE.MeshBasicMaterial({
       map:THREE.ImageUtils.loadTexture('test.jpg')
     });
     img.map.needsUpdate = true;
@@ -95,7 +95,7 @@ class App {
     scene.add(plane);
 
     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-    shadowMesh.position.y = clone.position.y;
+    shadowMesh.position.y = clone.position.y;*/
   }
 
   /**
