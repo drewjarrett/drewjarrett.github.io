@@ -83,7 +83,25 @@ class App {
 
   /** Place image when the screen is tapped. */
   onSelect = () => {
-    let loader = new THREE.TextureLoader();
+
+    this.reticle.visible = false;
+
+
+    const materials = [
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
+      new THREE.MeshBasicMaterial({ color: 0x0000ff }),
+      new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
+      new THREE.MeshBasicMaterial({ color: 0xff00ff }),
+      new THREE.MeshBasicMaterial({ color: 0x00ffff }),
+      new THREE.MeshBasicMaterial({ color: 0xffff00 })
+    ];
+
+    const box = new THREE.Mesh(new THREE.BoxBufferGeometry(0.2, 0.2, 0.2), materials);
+    box.position.copy(this.reticle.position);
+    box.position.multiplyScalar(1);
+    scene.add(box);
+
+    /*let loader = new THREE.TextureLoader();
 
     var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
       //map: loader.load('test.jpg')
@@ -100,7 +118,7 @@ class App {
     this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
 
     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-    shadowMesh.position.y = clone.position.y;
+    shadowMesh.position.y = clone.position.y;*/
   }
 
   /**
