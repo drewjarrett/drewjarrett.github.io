@@ -34,11 +34,9 @@
       model.setAttribute('scale', '0.3 0.3 0.3');
       model.setAttribute('position', '0 0 0');
 
-      /*model.addEventListener('loaded', () => {
-        alert('Well... it loaded apparently. latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
-      });*/
-
-      let imagemodel = document.createElement('a-entity');
+      model.addEventListener('loaded', () => {
+        alert('Loaded at latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
+      });
 
       scene.appendChild(model);
     });
