@@ -28,15 +28,20 @@
       {
         "imports": {
           "react": "https://esm.sh/react?dev",
-          "react-dom/client": "https://esm.sh/react-dom/client?dev"
+          "react-dom/client": "https://esm.sh/react-dom/client?dev",
+          "react-geolocated": "https://esm.sh/react-geolocated"
         }
       }
     </script>
     <script src="app.js" type="text/babel" data-type="module"></script>
+    <script>
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('drew 2');
+      alert(position.coords.latitude + " - " + position.coords.longitude);
+    });
+    </script>
   </head>
   <body>
-
-  DREW---<br>
 
   <div id="root"></div>
 

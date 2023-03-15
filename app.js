@@ -6,10 +6,12 @@ class Hiro extends Component {
     return (
       <a-scene
        vr-mode-ui="enabled: false"
-    embedded
-        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-        <a-camera gps-camera rotation-reader></a-camera>
-  </a-scene>
+       embedded
+       arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+       <a-camera gps-camera rotation-reader></a-camera>
+
+       <a-entity gltf-model="test.jpg" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="longitude: 12.489820; latitude: 41.892590;" animation-mixer />
+      </a-scene>
     );
   }
 }
@@ -24,7 +26,13 @@ class App extends Component {
   }
 
   handleStartClick() {
-    this.setState({startVr : true });
+    console.log('drew');
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('drew 2');
+      alert(position.coords.latitude + " - " + position.coords.longitude);
+    });
+
+    //this.setState({startVr : true });
   }
 
   render() {
@@ -32,7 +40,7 @@ class App extends Component {
       <div>
         {!this.state.startVr && (
           <button onClick={this.handleStartClick}>
-              Click here!
+              First we'll ask for Camera and Location permissions here
           </button>
         )}
 
@@ -45,6 +53,7 @@ class App extends Component {
 }
 
 const root = createRoot(document.getElementById('root'));
+
 root.render(
   <StrictMode>
     <App />
