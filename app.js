@@ -8,15 +8,25 @@ class Hiro extends Component {
     this.state = {lat : 51.0698916, lng: -1.3118446};
 
     navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({
+        lat : position.coords.latitude,
+        lng : position.coords.longitude
+      });
       alert(position.coords.latitude + " - " + position.coords.longitude);
     });
+
+    this.handleDrewClick = this.handleDrewClick.bind(this);
+  }
+
+  handleDrewClick() {
+    alert(this.state.lat + " - " + this.state.lng);
   }
 
   render() {
     return (
       <div>
         <div class="aSceneControls">
-          DREW
+          <button onClick={this.handleDrewClick}>DREW</button>
         </div>
         <a-scene
           vr-mode-ui="enabled: false"
