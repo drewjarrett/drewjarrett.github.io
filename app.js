@@ -18,6 +18,8 @@ class Hiro extends Component {
   }
 
   handleDrewClick() {
+    let scene = document.querySelector('a-scene');
+    alert(scene);
     alert(this.state.lat + " - " + this.state.lng);
   }
 
