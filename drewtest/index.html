@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo - AR Test #3</title>
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+    <!-- three.js -->
+    <script src="https://unpkg.com/three@0.126.0/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="shared/app.css" />
+    <script src="shared/utils.js"></script>
+  </head>
+  <body>
+    <div id="enter-ar-info" class="mdc-card demo-card">
+      <h2>Drew Echo AR Test #3</h2>
+      <p>
+        Let's drop an image of Annabel into an AR world.
+      </p>
+
+      <!-- Starting an immersive WebXR session requires user interaction. Start the WebXR experience with a simple button. -->
+      <a id="enter-ar" class="mdc-button mdc-button--raised mdc-button--accent">
+        Start Echo Test #3
+      </a>
+    </div>
+
+    <div id="unsupported-info" class="mdc-card demo-card">
+      <h2>Unsupported Browser</h2>
+      <p>
+        Your browser does not support AR features with WebXR. DOH!!
+      </p>
+    </div>
+    <script src="app.js"></script>
+    <div id="stabilization"></div>
+  </body>
+</html>
