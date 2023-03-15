@@ -89,7 +89,7 @@ class App {
       map: loader.load('test.jpg')
     });
 
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), material);
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), material);
     plane.position.copy(this.reticle.position);
     scene.add(plane);
 
