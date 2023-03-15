@@ -10,7 +10,7 @@ class Hiro extends Component {
        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
        <a-camera gps-camera rotation-reader></a-camera>
 
-       <a-entity gltf-model="test.jpg" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="longitude: 12.489820; latitude: 41.892590;" animation-mixer />
+       <a-entity gltf-model="test.jpg" rotation="0 180 0" scale="0.15 0.15 0.15" gps-entity-place="longitude: -1.3117889; latitude: 51.0698068;" animation-mixer />
       </a-scene>
     );
   }
@@ -26,13 +26,11 @@ class App extends Component {
   }
 
   handleStartClick() {
-    console.log('drew');
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log('drew 2');
       alert(position.coords.latitude + " - " + position.coords.longitude);
     });
 
-    //this.setState({startVr : true });
+    this.setState({startVr : true });
   }
 
   render() {
