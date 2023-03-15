@@ -30,7 +30,7 @@
       model.setAttribute('gps-entity-place', 'latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
       //model.setAttribute('gltf-model', './assets/magnemite/scene.gltf');
       
-      model.setAttribute('data-src', './test.jpg');
+      model.setAttribute('data-src', 'src: ./test.jpg');
 
       model.setAttribute('rotation', '0 180 0');
       model.setAttribute('animation-mixer', '');
@@ -38,7 +38,7 @@
       model.setAttribute('position', '0 0 0');
 
       model.addEventListener('loaded', () => {
-        alert('Loaded at latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
+        alert('2 Loaded at latitude: ' + position.coords.latitude + '; longitude: ' + position.coords.longitude + ';');
       });
 
       scene.appendChild(model);
