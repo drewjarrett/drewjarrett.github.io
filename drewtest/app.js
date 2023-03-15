@@ -85,28 +85,19 @@ class App {
   onSelect = () => {
     let loader = new THREE.TextureLoader();
 
-    var material = new THREE.MeshLambertMaterial({
+    var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
       map: loader.load('test.jpg')
     });
 
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), material);
-    plane.position.copy(this.reticle.position);
-    scene.add(plane);
+    const geometry = new THREE.BoxBufferGeometry( 500, 500, 500 );
+    //const geometry = new THREE.PlaneGeometry(1000, 1000);
 
-
-    /*var img = new THREE.MeshBasicMaterial({
-      map:THREE.ImageUtils.loadTexture('test.jpg')
-    });
-    img.map.needsUpdate = true;*/
-
-    // plane
-    /*var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), img);
-    plane.overdraw = true;
-    plane.position.copy(this.reticle.position);
-    scene.add(plane);
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.copy(this.reticle.position);
+    scene.add(mesh);
 
     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-    shadowMesh.position.y = clone.position.y;*/
+    shadowMesh.position.y = clone.position.y;
   }
 
   /**
