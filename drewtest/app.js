@@ -83,13 +83,20 @@ class App {
 
   /** Place a sunflower when the screen is tapped. */
   onSelect = () => {
+    let loader = new THREE.TextureLoader();
+
+    var material = new THREE.MeshLambertMaterial({
+      map: loader.load('test.jpg')
+    });
+
+
     /*var img = new THREE.MeshBasicMaterial({
       map:THREE.ImageUtils.loadTexture('test.jpg')
     });
-    img.map.needsUpdate = true;
+    img.map.needsUpdate = true;*/
 
     // plane
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), img);
+    /*var plane = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), img);
     plane.overdraw = true;
     plane.position.copy(this.reticle.position);
     scene.add(plane);
