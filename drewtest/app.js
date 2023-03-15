@@ -113,7 +113,7 @@ class App {
 
     /* No idea where this goes wrong */
 
-    let loader = new THREE.TextureLoader();
+    /*let loader = new THREE.TextureLoader();
 
     var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
       //map: loader.load('test.jpg')
@@ -125,7 +125,7 @@ class App {
 
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.copy(this.reticle.position);
-    this.scene.add(mesh);
+    this.scene.add(mesh);*/
 
     //this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
 
