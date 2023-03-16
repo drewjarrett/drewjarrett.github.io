@@ -87,7 +87,7 @@ class App {
 
 
 
-    //this.scene.remove(this.reticle);
+    
 
 
     //if (window.sunflower) {
@@ -118,6 +118,12 @@ class App {
       const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
       shadowMesh.position.y = imgmeshclone.position.y;
     }
+
+    this.scene.remove(this.reticle);
+    this.xrSession.removeEventListener("select", this.onSelect);
+
+
+
 
     /* No idea where this goes wrong */
 
