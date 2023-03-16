@@ -41,6 +41,14 @@ window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf
 
 
 
+    const imggeometry = new THREE.PlaneGeometry(0.2, 0.2)
+    const imgmaterial = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        wireframe: true,
+        side: THREE.DoubleSide
+    })
+    window.imgmesh = new THREE.Mesh(imggeometry, imgmaterial);
+
 
 
 

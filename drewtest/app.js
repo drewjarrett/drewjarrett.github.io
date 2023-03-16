@@ -93,7 +93,7 @@ class App {
     if (window.sunflower) {
       const clone = window.sunflower.clone();
       clone.position.copy(this.reticle.position);
-      this.scene.add(clone)
+      this.scene.add(clone);
 
       //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
       //shadowMesh.position.y = clone.position.y;
@@ -101,15 +101,20 @@ class App {
 
 
 
-    if (window.testbox) {
-      const testclone = window.testbox.clone();
-      testclone.position.copy(this.reticle.position);
-      this.scene.add(testclone)
+    //if (window.testbox) {
+      //const testclone = window.testbox.clone();
+      //testclone.position.copy(this.reticle.position);
+      //this.scene.add(testclone);
 
       //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
       //shadowMesh.position.y = clone.position.y;
-    }
+    //}
 
+    if (window.imgmesh) {
+      const imgmeshclone = window.imgmesh.clone();
+      imgmeshclone.position.copy(this.reticle.position);
+      this.scene.add(imgmeshclone);
+    }
 
     /* No idea where this goes wrong */
 
