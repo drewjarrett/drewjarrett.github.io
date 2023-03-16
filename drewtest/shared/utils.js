@@ -36,7 +36,7 @@ window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf
       new THREE.MeshBasicMaterial({ color: 0xffff00 })
     ];
 
-    window.testbox = new THREE.Mesh(new THREE.BoxBufferGeometry(0.2, 0.2, 0.2), materials);
+    window.testbox = new THREE.Mesh(new THREE.BoxBufferGeometry(0.2, 0.2, 0.2), testmaterials);
     testbox.position.multiplyScalar(1);
 
 
