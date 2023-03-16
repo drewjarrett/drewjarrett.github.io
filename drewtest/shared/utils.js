@@ -40,11 +40,16 @@ window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf
     testbox.position.multiplyScalar(1);
 
 
+    const imgmaterial = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
+      //map: loader.load('test.jpg')
+      map: loader.load('https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg')
+    });
+
 
     const imggeometry = new THREE.PlaneGeometry(0.2, 0.2)
-    const imgmaterial = new THREE.MeshBasicMaterial({
+    const basicmaterial = new THREE.MeshBasicMaterial({
         color: 0xff0000,
-        wireframe: true,
+        wireframe: false,
         side: THREE.DoubleSide
     })
     window.imgmesh = new THREE.Mesh(imggeometry, imgmaterial);
