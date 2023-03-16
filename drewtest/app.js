@@ -9,7 +9,7 @@ function onNoXRDevice() {
 (async function() {
   const isArSessionSupported = navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported("immersive-ar");
   if (isArSessionSupported) {
-    document.getElementById("enter-ar").addEventListener("click", window.app.activateXR)
+    document.getElementById("enter-ar").addEventListener("click", window.app.activateXR);
   } else {
     onNoXRDevice();
   }
@@ -26,10 +26,20 @@ class App {
   activateXR = async () => {
     try {
       // Initialize a WebXR session using "immersive-ar".
+      
+      //let overlay = document.createElement("div");
+      //overlay.id = "immersive-ar-overlay";
+      //overlay.stlye = "width: 100%; height: 100px; background: green;";
+
       this.xrSession = await navigator.xr.requestSession("immersive-ar", {
         requiredFeatures: ['hit-test', 'dom-overlay'],
-        domOverlay: { root: document.body }
+        domOverlay: { root: document.getElementById("immersive-ar-overlay") }
       });
+
+      //this.xrSession.onend = async (event) => {
+        //freeResources();
+        //document.body.classList.remove('ar'); 
+      //};
 
       // Create the canvas that will contain our camera's background and our virtual scene.
       this.createXRCanvas();
@@ -39,6 +49,14 @@ class App {
     } catch(e) {
       console.log(e);
       onNoXRDevice();
+    }
+  }
+
+  exitXR = async () => {
+    document.body.classList.remove('ar');
+
+    if (this.xrSession) {
+      await this.xrSession.end();
     }
   }
 
@@ -78,37 +96,13 @@ class App {
     // Start a rendering loop using this.onXRFrame.
     this.xrSession.requestAnimationFrame(this.onXRFrame);
 
-    this.xrSession.addEventListener("select", this.onSelect);
+    //this.xrSession.addEventListener("select", this.onSelect);
+    document.getElementById("exit-ar").addEventListener("click", this.exitXR);
+    document.getElementById("drop-ghost").addEventListener("click", this.onSelect);
   }
 
   /** Place image when the screen is tapped. */
-  onSelect = () => {
-
-
-
-
-    
-
-
-    //if (window.sunflower) {
-      //const clone = window.sunflower.clone();
-      //clone.position.copy(this.reticle.position);
-      //this.scene.add(clone);
-
-      //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-      //shadowMesh.position.y = clone.position.y;
-    //}
-
-
-
-    //if (window.testbox) {
-      //const testclone = window.testbox.clone();
-      //testclone.position.copy(this.reticle.position);
-      //this.scene.add(testclone);
-
-      //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-      //shadowMesh.position.y = clone.position.y;
-    //}
+  onSelect = (event) => {
 
     if (window.imgmesh) {
       const imgmeshclone = window.imgmesh.clone();
@@ -120,31 +114,8 @@ class App {
     }
 
     this.scene.remove(this.reticle);
-    this.xrSession.removeEventListener("select", this.onSelect);
-
-
-
-
-    /* No idea where this goes wrong */
-
-    /*let loader = new THREE.TextureLoader();
-
-    var material = new THREE.MeshLambertMaterial({ // MeshBasicMaterial if want no light
-      //map: loader.load('test.jpg')
-      map: loader.load('https://s3.amazonaws.com/duhaime/blog/tsne-webgl/assets/cat.jpg')
-    });
-
-    const geometry = new THREE.BoxBufferGeometry( 0.5, 0.5, 0.5 );
-    //const geometry = new THREE.PlaneGeometry(1000, 1000);
-
-    var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.copy(this.reticle.position);
-    this.scene.add(mesh);*/
-
-    //this.reticle.visible = false; // TODO: Maybe better to just remove from scene?
-
-    //const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-    //shadowMesh.position.y = clone.position.y;
+    event.target.classList.add('disable');
+    event.target.removeEventListener("click", this.onSelect);
   }
 
   /**
@@ -193,7 +164,7 @@ class App {
       }
 
       // Render the scene with THREE.WebGLRenderer.
-      this.renderer.render(this.scene, this.camera)
+      this.renderer.render(this.scene, this.camera);
     }
   }
 

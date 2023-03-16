@@ -11,12 +11,19 @@
     <script src="https://unpkg.com/three@0.126.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="shared/app.css" />
-    <script src="shared/utils.js"></script>
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <script src="utils.js"></script>
   </head>
   <body>
+    <div id="immersive-ar-overlay">
+      <div class="menu">
+        <a id="exit-ar" class="mdc-button mdc-button--raised mdc-button--accent">Exit</a> 
+        <a id="drop-ghost" class="mdc-button mdc-button--raised mdc-button--accent">Drop Ghost</a>
+      </div>
+    </div>
+
     <div id="enter-ar-info" class="mdc-card demo-card">
-      <h2>Drew Echo AR Test #3</h2>
+      <h2>Drew Echo AR Test #4</h2>
       <p>
         Let's drop an image of Annabel into an AR world.
       </p>
