@@ -87,7 +87,7 @@ class App {
 
 
 
-    //this.reticle.visible = false;
+    //this.scene.remove(this.reticle);
 
 
     if (window.sunflower) {
