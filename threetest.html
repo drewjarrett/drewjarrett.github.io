@@ -1,0 +1,298 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Echo! The world we remember."/><title>THREE TEST App</title><script src="https://unpkg.com/three@0.126.0/build/three.js"></script>
+
+
+<style>
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  canvas, video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  canvas {
+    z-index: 10;
+  }
+
+  .output {
+    width: 150px;
+    float: left;
+    font-size: 11px;
+    border: 1px black solid;
+  }
+</style>
+
+</head><body>
+
+<div id="motionoutput" class="output"></div>
+<div id="orientationoutput" class="output"></div>
+
+<video id="player" autoplay></video>
+<canvas id="threetestcanvas" width="800" height="800"></canvas>
+
+<script type="text/javascript">
+  function createLitScene() {
+    const scene = new THREE.Scene();
+
+    // The materials will render as a black mesh
+    // without lights in our scenes. Let's add an ambient light
+    // so our material can be visible, as well as a directional light
+    // for the shadow.
+    const light = new THREE.AmbientLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3);
+    directionalLight.position.set(10, 15, 10);
+
+    // We want this light to cast shadow.
+    directionalLight.castShadow = true;
+
+    // Make a large plane to receive our shadows
+    const planeGeometry = new THREE.PlaneGeometry(2000, 2000);
+    // Rotate our plane to be parallel to the floor
+    planeGeometry.rotateX(-Math.PI / 2);
+
+    // Create a mesh with a shadow material, resulting in a mesh
+    // that only renders shadows once we flip the `receiveShadow` property.
+    const shadowMesh = new THREE.Mesh(planeGeometry, new THREE.ShadowMaterial({
+      color: 0x111111,
+      opacity: 0.2,
+    }));
+
+    // Give it a name so we can reference it later, and set `receiveShadow`
+    // to true so that it can render our model's shadow.
+    shadowMesh.name = 'shadowMesh';
+    shadowMesh.receiveShadow = true;
+    shadowMesh.position.y = 10000;
+
+    // Add lights and shadow material to scene.
+    scene.add(shadowMesh);
+    scene.add(light);
+    scene.add(directionalLight);
+
+    return scene;
+  }
+
+  /* Three Scene */
+
+  let scene = null;
+  let camera = null;
+  let renderer = null;
+  let cube = null;
+
+  function animate() {
+	  requestAnimationFrame( animate );
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+	  renderer.render( scene, camera );
+  }
+
+  function setupThreeJs() {
+    // Get Video Stream
+    const player = document.getElementById('player');
+    const playerConstraints = {
+      video: {
+        /*width: {
+          ideal: 1920,
+        },
+        height: {
+          ideal: 1080,
+        },*/
+        facingMode: 'environment'
+      },
+      audio: false
+    };
+    navigator.mediaDevices.getUserMedia(playerConstraints).then((stream) => {
+      player.srcObject = stream;
+    });
+
+    // Now 3D Bits
+
+  	// Where we will draw the scene.
+  	const canvas = document.getElementById('threetestcanvas');
+    const canvasContext = canvas.getContext("webgl");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    scene = createLitScene();
+    //scene = new THREE.Scene();
+
+    //camera = new THREE.PerspectiveCamera();
+    camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 1000 );
+
+    //renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      preserveDrawingBuffer: true,
+      canvas: canvas,
+      context: canvasContext
+    });
+    //renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize( canvas.width, canvas.height );
+
+    document.body.appendChild( renderer.domElement );
+
+    /* Add a cube */
+
+    const materials = [
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }),
+      new THREE.MeshBasicMaterial({ color: 0x0000ff }),
+      new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
+      new THREE.MeshBasicMaterial({ color: 0xff00ff }),
+      new THREE.MeshBasicMaterial({ color: 0x00ffff }),
+      new THREE.MeshBasicMaterial({ color: 0xffff00 })
+    ];
+
+    const geometry = new THREE.BoxBufferGeometry( 0.2, 0.2, 0.2 );
+    //const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    cube = new THREE.Mesh( geometry, materials );
+    scene.add( cube );
+
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 5;
+
+    animate();
+  }
+
+  /* Motion */
+
+  let xAccelerationLerp = 0;
+  let yAccelerationLerp = 0;
+  let zAccelerationLerp = 0;
+  let xRotateLerp = 0;
+  let yRotateLerp = 0;
+  let zRotateLerp = 0;
+
+  let xOrientationLerp = 0;
+  let yOrientationLerp = 0;
+  let zOrientationLerp = 0;
+
+  let isCameraStart = false;
+  // Note: May not even need this start if I wana have the object load in same place!
+  let cameraAlphaAngleStart = 0;
+  let cameraAlphaAngle = 0;
+  let cameraBetaAngle = 0;
+
+  /*let testangel = 0;
+  function testRotate() {
+    testangel += 10;
+
+    camera.rotation.x = testangel * (Math.PI/180);
+    camera.updateProjectionMatrix();
+  }*/
+
+  function lerp(start, end, amt) {
+    return roundIt((1-amt)*start+amt*end);
+  }
+
+  function roundIt(num) {
+    //return Math.round(num * 100) / 100;
+    return Math.round(num);
+  }
+
+  function handleMotionEvent(event) {
+    const output = document.getElementById('motionoutput');
+
+    const xAcceleration = event.accelerationIncludingGravity.x;
+    const yAcceleration = event.accelerationIncludingGravity.y;
+    const zAcceleration = event.accelerationIncludingGravity.z;
+
+    xAccelerationLerp = lerp(xAccelerationLerp, xAcceleration, 0.15);
+    yAccelerationLerp = lerp(yAccelerationLerp, yAcceleration, 0.15);
+    zAccelerationLerp = lerp(zAccelerationLerp, zAcceleration, 0.15);
+
+    const htmlAcceleration = "Acceleration<br>x: " + xAccelerationLerp
+        + "<br>y: " + yAccelerationLerp
+        + "<br>z: " + zAccelerationLerp;
+
+    const xRotate = event.rotationRate.beta;
+    const yRotate = event.rotationRate.gamma;
+    const zRotate = event.rotationRate.alpha;
+
+    xRotateLerp = lerp(xRotateLerp, xRotate, 0.15);
+    yRotateLerp = lerp(yRotateLerp, yRotate, 0.15);
+    zRotateLerp = lerp(zRotateLerp, zRotate, 0.15);
+
+    const htmlRotate = "Rotate<br>x: " + xRotateLerp
+        + "<br>y: " + yRotateLerp
+        + "<br>z: " + zRotateLerp;
+    
+    output.innerHTML = htmlAcceleration + "<br>" + htmlRotate;
+  }
+
+  function handleOrientationEvent(event) {
+    const output = document.getElementById('orientationoutput');
+
+    const orientationAlpha = event.alpha;
+    const orientationBeta = event.beta;
+    const orientationGamma = event.gamma;
+    
+    if (!isCameraStart) {
+      cameraAlphaAngleStart = roundIt(orientationAlpha);
+      cameraAlphaAngle = 0;
+
+      cameraBetaAngle = 0;
+
+      orientationBetaLerp = orientationBeta;
+      orientationGammaLerp = orientationGamma;
+      orientationAlphaLerp = orientationAlpha;
+
+      isCameraStart = true;
+
+      return;
+    }
+
+    // Once it's completed an entire 360deg.
+    // To avoid it jumping around.
+    if (Math.abs(orientationAlpha - orientationAlphaLerp) > 50) {
+      orientationAlphaLerp = (orientationAlpha + orientationGamma);
+    }
+
+    orientationAlphaLerp = lerp(orientationAlphaLerp, (orientationAlpha + orientationGamma), 0.15);
+    if (Math.abs(orientationGamma) < 50) {
+      // TODO: I can do better then this.
+      orientationBetaLerp = lerp(orientationBetaLerp, (orientationBeta), 0.15);
+    }
+    orientationGammaLerp = lerp(orientationGammaLerp, orientationGamma, 0.15);
+
+    if (cameraAlphaAngleStart >= orientationAlphaLerp) {
+      cameraAlphaAngle = cameraAlphaAngleStart - orientationAlphaLerp;
+    } else {
+      cameraAlphaAngle = cameraAlphaAngleStart + (360 - orientationAlphaLerp);
+    }
+
+    cameraBetaAngle = 90 - orientationBetaLerp;
+
+    if (!camera) {
+      return;
+    }
+
+    camera.rotation.x = -cameraBetaAngle * (Math.PI/180);
+    camera.rotation.y = -cameraAlphaAngle * (Math.PI/180);
+    camera.updateProjectionMatrix();
+
+    output.innerHTML = "Orientation<br>x: " + orientationBetaLerp
+        + "<br>y: " + orientationGammaLerp
+        + "<br>z: " + orientationAlphaLerp
+        + "<br><br>Angle Alpha: " + cameraAlphaAngle
+        + "<br>Angle Beta: " + cameraBetaAngle;
+  }
+
+  window.addEventListener("devicemotion", handleMotionEvent, true);
+  window.addEventListener("deviceorientation", handleOrientationEvent, true);
+
+  window.onload = setupThreeJs();
+</script>
+
+<!--
+<button onClick="testRotate()" style="font-size: 28px">Test Rotate</button>
+-->
+
+</body></html>
