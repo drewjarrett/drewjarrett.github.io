@@ -20,6 +20,14 @@
     z-index: 10;
   }
 
+  #start {
+    font-size: 28px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+  }
+
   .output {
     width: 150px;
     float: left;
@@ -29,12 +37,6 @@
 </style>
 
 </head><body>
-
-<div id="motionoutput" class="output"></div>
-<div id="orientationoutput" class="output"></div>
-
-<video id="player" autoplay></video>
-<canvas id="threetestcanvas" width="800" height="800"></canvas>
 
 <script type="text/javascript">
   function createLitScene() {
@@ -94,26 +96,6 @@
   }
 
   function setupThreeJs() {
-    // Get Video Stream
-    const player = document.getElementById('player');
-    const playerConstraints = {
-      video: {
-        /*width: {
-          ideal: 1920,
-        },
-        height: {
-          ideal: 1080,
-        },*/
-        facingMode: 'environment'
-      },
-      audio: false
-    };
-    navigator.mediaDevices.getUserMedia(playerConstraints).then((stream) => {
-      player.srcObject = stream;
-    });
-
-    // Now 3D Bits
-
   	// Where we will draw the scene.
   	const canvas = document.getElementById('threetestcanvas');
     const canvasContext = canvas.getContext("webgl");
@@ -285,14 +267,63 @@
         + "<br>Angle Beta: " + cameraBetaAngle;
   }
 
-  window.addEventListener("devicemotion", handleMotionEvent, true);
-  window.addEventListener("deviceorientation", handleOrientationEvent, true);
+  function loadit(event) {
 
-  window.onload = setupThreeJs();
+    event.target.remove();
+
+    setupThreeJs();
+
+    const ua = navigator.userAgent.toLowerCase();
+
+    // Get Video Stream
+    const player = document.getElementById('player');
+    const playerConstraints = {
+      video: {
+        facingMode: 'environment'
+      },
+      audio: false
+    };
+
+    player.setAttribute('autoplay', '');
+    player.setAttribute('muted', '');
+    player.setAttribute('playsinline', '');
+
+    navigator.mediaDevices.getUserMedia(playerConstraints).then((stream) => {
+      player.srcObject = stream;
+    });
+
+    if ( typeof( DeviceOrientationEvent ) !== "undefined"
+      && typeof( DeviceOrientationEvent.requestPermission ) === "function" ) {
+      DeviceOrientationEvent.requestPermission()
+        .then( response => {
+          if ( response == "granted" ) {
+            window.addEventListener("deviceorientation", handleOrientationEvent, true);
+          } else {alert('-2');
+            // ERROR
+          }
+        });
+    } else if (ua.indexOf("android") > -1) {
+      window.addEventListener("deviceorientation", handleOrientationEvent, true);
+    } else {
+      // ERROR?
+    }
+
+    //window.addEventListener("devicemotion", handleMotionEvent, true);
+    //window.addEventListener("deviceorientation", handleOrientationEvent, true);
+  }
+
+  function init() {
+    document.getElementById('start').addEventListener("click", loadit);
+  }
+
+  window.onload = init;
 </script>
 
-<!--
-<button onClick="testRotate()" style="font-size: 28px">Test Rotate</button>
--->
+<button id="start">Start</button>
+<div id="motionoutput" class="output"></div>
+<div id="orientationoutput" class="output"></div>
+
+<video id="player"></video>
+<canvas id="threetestcanvas" width="800" height="800"></canvas>
 
 </body></html>
