@@ -1,0 +1,10 @@
+.onboarding {
+  padding: 20px;
+}
+
+.onboarding .accessError{
+  background: yellow;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}

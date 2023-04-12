@@ -1,0 +1,6 @@
+.home header {
+  border-bottom: 1px #000 solid;
+  box-sizing: border-box;
+  font-size: 1.2em;
+  padding: 20px;
+}

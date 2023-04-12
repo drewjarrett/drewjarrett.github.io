@@ -1,0 +1,117 @@
+.create {
+  position: relative;
+  width: 100%;
+}
+
+.create header {
+  border-bottom: 1px #000 solid;
+  font-size: 1.2em;
+  height: 20px;
+  padding: 20px;
+}
+
+.create .steps {
+  border-bottom: 1px #000 solid;
+  font-size: 1em;
+}
+
+.create .steps .detail {
+  display: none;
+}
+
+.create .steps.step1 .step1,
+.create .steps.step2 .step2,
+.create .steps.step3 .step3 {
+  font-size: 1.3em;
+}
+
+.create .steps.step1 .step1 .detail,
+.create .steps.step2 .step2 .detail,
+.create .steps.step3 .step3 .detail {
+  display: block;
+}
+
+.create .body {
+  padding: 20px;
+}
+
+.create ul li {
+ padding: 5px 10px;
+}
+
+/* Camera */
+
+.create .capture .video {
+  background: black;
+  box-sizing: border-box;
+  display: none;
+  left: 0;
+  overflow: hidden;
+  padding: 20px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.create .capture.video .video {
+  display: block;
+}
+
+.create .capture .video .controls {
+  bottom: 0;
+  height: 50px;
+  left: calc(50% - 60px);
+  position: absolute;
+  width: 120px;
+}
+
+.create canvas {
+  display: none;
+}
+
+.create .capture .video video {
+  width: 100%;
+  /*-moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+  filter: FlipH;*/
+}
+
+/* Create */
+
+.create .create img {
+  width: 80%;
+}
+
+.create .create.ghost img {
+  background: url('https://drewjarrett.github.io/images/temp-notlicenced-ghostbg.png') no-repeat 0 0;
+  border: 5px #FFF solid;
+}
+
+.create .create.memory img {
+  background-color: #ddc;
+  border: solid 5vmin #eee;
+  border-bottom-color: #fff;
+  border-left-color: #eee;
+  border-radius: 2px;
+  border-right-color: #eee;
+  border-top-color: #ddd;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset, 0 5px 10px 5px rgba(0,0,0,.25);
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 8vmin;
+  position: relative;
+  text-align: center;
+}
+
+.create .create.memory button.memory,
+.create .create.ghost button.ghost {
+  color: grey;
+  opacity: 0.7;
+}
+
+.create .create.ghost img {
+  opacity: 0.8;
+}
