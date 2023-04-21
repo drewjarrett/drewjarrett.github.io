@@ -1,8 +1,0 @@
-{
-  "short_name": "Echo App",
-  "name": "Echo App. The world to remember.",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
